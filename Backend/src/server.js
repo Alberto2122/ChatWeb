@@ -1,15 +1,17 @@
-const { webSocketServer } = require("ws");
+const { WebSocketServer } = require("ws");
 const dotenv = require("dotenv");
 
-dotenv.config()
+dotenv.config();
 
-const wss = new webSocketServer ({port: process.env.PORT || 8080});
+const wss = new WebSocketServer({ port: process.env.PORT || 8080 });
 
-wss.on("connection", (ws) => {
-    ws.on("error", console.error) 
-    
-    ws.on("massage", () => {
-        
+wss.on("connection", (WebSocketServer) => {
+    ws.on("error", console.error);
+   
+    ws.on('message', (data) => {
+        wss.clients.forEach((client) => client.send(data.toString()));
     })
 
+    console.log("Conectado");
+ 
 })
